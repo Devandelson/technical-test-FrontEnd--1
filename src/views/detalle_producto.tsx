@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { Search } from './components/search.tsx';
 
+import conex from './urlApi.ts'
+
 interface ProductData {
     idProducto: number;
     nombre: string;
@@ -28,7 +30,7 @@ export default function DetailProduct() {
         }
 
         setLoading(true);
-        fetch(`http://localhost:3000/api/producto/${id}`)
+        fetch(`${conex}/producto/${id}`)
             .then((res) => {
                 if (!res.ok) throw new Error('Error al obtener el producto');
                 return res.json();
