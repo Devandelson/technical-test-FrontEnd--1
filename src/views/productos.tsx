@@ -31,7 +31,7 @@ export default function Products() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`${conex}/producto?search=${encodeURIComponent(search)}`, {
+                const response = await fetch(`${conex}/producto?search=${search}`, {
                     method: 'GET',
                     headers: {
                         'content-type': 'application/json'

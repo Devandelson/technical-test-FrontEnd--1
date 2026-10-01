@@ -11,7 +11,7 @@ interface ProductData {
     precio: number;
     puntuacion: number;
     stock: number;
-    imagenes: string;
+    imagenes: string[];
     categoría: string;
 }
 
@@ -37,7 +37,7 @@ export default function DetailProduct() {
             })
             .then((data) => {
                 // Si la API devuelve un array, toma el primer elemento; si es objeto, úsalo directamente
-                const productData = data.data[0];
+                const productData = data.data;
                 setProduct(productData);
                 setLoading(false);
             })
@@ -55,8 +55,8 @@ export default function DetailProduct() {
     if (error || !product) return <p className='text-center p-5 text-red-500'>{error || 'Producto no encontrado'}</p>;
 
     // Descompone la cadena de imágenes separadas por coma
-    const imageList = product.imagenes ? product.imagenes.split(',') : [];
-    
+    const imageList: string[] = !product.imagenes ? [] : product.imagenes;
+
     return (
         <>
             <Search />

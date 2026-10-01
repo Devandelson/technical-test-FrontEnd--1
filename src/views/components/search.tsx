@@ -8,17 +8,14 @@ function sendInfo(e: SyntheticEvent<HTMLFormElement>, navigate: NavigateFunction
     const target = e.currentTarget;
     const buscador = target.buscador.value;
     if (buscador !== null) {
-        navigate({
-            'search': buscador,
-            pathname: '/producto'
-        });
+        navigate(`/producto?search=${encodeURIComponent(buscador)}`);
         return;
     }
 
     alert('Necesitas colocar texto en el buscador.');
 }
 
-export function SearchHome() {
+export function SearchHome({categories}: {categories: {categoria: string}[]}) {
     const navigate = useNavigate();
 
     return (
@@ -38,11 +35,19 @@ export function SearchHome() {
                 <form className="flex flex-col gap-8 w-full" onSubmit={(e) => {
                     sendInfo(e, navigate)
                 }}>
-                    <input name='buscador' type="text" placeholder="Busca tu producto..." className="w-full p-3 bg-gray-200 rounded-sm outline-none" />
+                    <input name='buscador' type="text" placeholder="Busca tu producto..." className="w-full p-3 bg-gray-200 rounded-sm outline-none" 
+                    list="categorias"
+                    />
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-7 rounded w-max m-auto">
                         Buscar
                     </button>
                 </form>
+
+                <datalist id="categorias">
+                    {categories.map((item, index) => (
+                        <option key={index} value={item.categoria} />
+                    ))}
+                </datalist>
             </header>
         </motion.div>
     )
@@ -54,11 +59,11 @@ export function Search() {
     return (
         <motion.header className="h-auto flex justify-center items-center gap-8 text-center
             w-full max-w-4xl m-auto"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
                 duration: 0.4,
-                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                y: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
             }}
         >
             <section className="flex items-center gap-2">
